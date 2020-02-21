@@ -5,15 +5,17 @@ a – add – команда, которая добавит новый доку�
 d – delete – команда, которая спросит номер документа и удалит его из каталога и из перечня полок;
 m – move – команда, которая спросит номер документа и целевую полку и переместит его с текущей полки на целевую;
 as – add shelf – команда, которая спросит номер новой полки и добавит ее в перечень;
+o - owners - команда, выводящая имена всех владельцев документов;
 q - for exit
 '''
 
-cmd_list = ["p", "l", "s", "a", "q", "d", 'm', 'as']
+cmd_list = ["p", "l", "s", "a", "q", "d", 'm', 'as', 'o']
 
 documents = [
     {"type": "passport", "number": "2207 876234", "name": "Василий Гупкин"},
     {"type": "invoice", "number": "11-2", "name": "Геннадий Покемонов"},
-    {"type": "insurance", "number": "10006", "name": "Аристарх Павлов"}
+    {"type": "insurance", "number": "10006", "name": "Аристарх Павлов"},
+    {"type": "insurance", "number": "10006"},
 ]
 
 directories = {
@@ -83,6 +85,19 @@ def add_shelf(sh_numb):
         directories.update({sh_numb: []})
 
 
+def show_owners():
+    owners = set()
+    for doc in documents:
+        try:
+            owners.add(doc['name'])
+        except KeyError:
+            print(f"Error. Document \"{doc}\" doesn\'t have \"name\" attribute")
+
+    print("Owners:")
+    for owner in owners:
+        print(owner)
+
+
 print(info_message)
 while 1:
     cmd = input("SELECT ACTION:\n").lower()
@@ -115,5 +130,7 @@ while 1:
                 print('Doc not found on the shelves')
         elif cmd == 'as':
             add_shelf(input("Enter new shelf number: ").strip())
+        elif cmd == 'o':
+            show_owners()
 
 
