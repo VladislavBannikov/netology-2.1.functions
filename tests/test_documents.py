@@ -65,3 +65,6 @@ class TestDocuments(unittest.TestCase):
         result = app.del_doc(numb_to_remove)
         self.assertEqual(result, 0)
 
+
+if __name__ == '__main__':
+    unittest.main()
